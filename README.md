@@ -2,6 +2,8 @@
 
 JajaBot es un bot de Discord que consume una API de chistes y los comparte en tu servidor de Discord.
 
+Link para añadirlo a tu servidor: [Bot para Discord](https://discord.com/oauth2/authorize?client_id=1391159444490158202&permissions=274877908992&integration_type=0&scope=bot)
+
 ## Características
 
 - Obtener chistes aleatorios por tipo o grupo
@@ -15,7 +17,7 @@ JajaBot es un bot de Discord que consume una API de chistes y los comparte en tu
 - Token de bot de Discord
 - URL de la API de chistes
 
-## Configuración
+## Configurar tu propio bot (Para no usar el anterior)
 
 ### 1. Crear un Bot de Discord
 
@@ -72,16 +74,16 @@ JajaBot es un bot de Discord que consume una API de chistes y los comparte en tu
 
 1. Crea un entorno virtual:
    ```bash
-   python3.13 -m venv venv
+   python3.13 -m venv .venv
    ```
 2. Activa el entorno virtual:
    - En Linux/macOS:
      ```bash
-     source venv/bin/activate
+     source .venv/bin/activate
      ```
    - En Windows:
      ```bash
-     venv\Scripts\activate
+     .venv\Scripts\activate
      ```
 3. Instala las dependencias:
    ```bash

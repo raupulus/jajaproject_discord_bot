@@ -1,8 +1,10 @@
 import discord
 from discord.ext import commands
+from discord.ext import tasks
 import random
 import sys
 import traceback
+import asyncio
 from config import DISCORD_TOKEN, COMMAND_PREFIX
 from jokes_service import JokesService
 
@@ -35,8 +37,59 @@ COMMANDS = {
     }
 }
 
+# List of bot statuses to rotate through
+BOT_STATUSES = [
+    #Compitiendo en...
+    "Pelar papas 🫏 🥔",
+    "Matar Bots 🫏 🤖",
+    "Compilar Cartero 🫏 📮",
+    "Reirme solo 🫏 😂",
+    "Leer memes 🫏 📱",
+    "Hacer el vago 🫏 😴",
+    "Echarme la siesta 🫏 💤",
+    "Programar nuevos chistes 🫏 💻",
+    "Estudiar comedia 🫏 📚",
+    "Ver Netflix 🫏 📺",
+    "Jugar al escondite 🫏 👻",
+    "Comer pizza 🫏 🍕",
+    "Bailar solo 🫏 💃",
+    "Cantar bajo la ducha 🫏 🚿",
+    "Dibujar garabatos 🫏 ✏️",
+    "Cocinar armondigas 🫏 🍝",
+    "Esperando el fin de semana 🫏 📅",
+    "Cocinar Croquetas de bacalao 🫏 🐟",
+    "Cazar un pollo 🫏 🐔",
+    "Comer Polvorones 🫏 🍪",
+    "Soplar el Puchero 🫏 🍲",
+    "Tostar almendras 🫏 🌰",
+    "Mascar Gomas de borrar 🫏 🟩",
+    "Miss Risitas de este año 🫏 👑",
+]
+
+
+# Current status index
+current_status_index = 0
+
 # Create the bot instance
 bot = commands.Bot(command_prefix=COMMAND_PREFIX, intents=intents, help_command=None)
+
+@tasks.loop(minutes=50)
+async def change_status():
+    """Background task to change the bot's status every 50 minutes."""
+    global current_status_index
+
+    # Get the current status
+    status = BOT_STATUSES[current_status_index]
+
+    # Update the bot's status
+    #await bot.change_presence(activity=discord.Game(name=status))
+    await bot.change_presence(activity=discord.Activity(
+        type=discord.ActivityType.competing,name=status))
+
+    # Move to the next status (loop back to the beginning if we reach the end)
+    current_status_index = (current_status_index + 1) % len(BOT_STATUSES)
+
+    print(f"Status changed to: {status}")
 
 @bot.event
 async def on_ready():
@@ -45,8 +98,11 @@ async def on_ready():
     print(f'Bot ID: {bot.user.id}')
     print('------')
 
-    # Set the bot's status
-    await bot.change_presence(activity=discord.Game(name=f"{COMMAND_PREFIX}help for commands"))
+    # Set the initial status immediately
+    await change_status()
+
+    # Start the status change task for future updates
+    change_status.start()
 
 @bot.event
 async def on_command_error(ctx, error):
@@ -76,17 +132,17 @@ async def chiste(ctx, arg=None):
         # Show help for the command
         embed = discord.Embed(
             title="Ayuda del comando chiste",
-            description="Obtiene un chiste de la API de chistes",
+            description="Bot para chistacos subidos por nuestros hermosos jajajeros para la comunidad",
             color=discord.Color.blue()
         )
         embed.add_field(
             name=f"{COMMAND_PREFIX}chiste",
-            value="Muestra este mensaje de ayuda",
+            value="Muestra este mensaje de aiuda",
             inline=False
         )
         embed.add_field(
             name=f"{COMMAND_PREFIX}chiste random",
-            value="Obtiene un chiste aleatorio por tipo",
+            value="Obtiene un chiste aleatorio entre todos los existentes",
             inline=False
         )
 
@@ -142,7 +198,7 @@ async def chiste(ctx, arg=None):
         # Create an embed for better formatting
         embed = discord.Embed(
             title=joke.get('title', 'Chiste'),
-            description=joke.get('content', 'No content available'),
+            description=joke.get('content', 'No hay contenido disponible actualmente.'),
             color=discord.Color.green()
         )
 
