@@ -2,96 +2,96 @@ import requests
 from config import JOKES_API_URL, JOKES_API_KEY
 
 class JokesService:
-    """Service for interacting with the jokes API."""
+    """Servicio que he creado para interactuar con la API de chistes."""
 
     def __init__(self):
         self.api_url = JOKES_API_URL
         self.api_key = JOKES_API_KEY
         self.headers = {}
 
-        # Set up headers if API key is provided
+        # Configuro las cabeceras si se proporciona una clave API
         if self.api_key:
             self.headers['Authorization'] = f'Bearer {self.api_key}'
 
     def get_random_joke(self):
         """
-        Fetch a random joke from the API.
+        Obtengo un chiste aleatorio desde la API.
 
         Returns:
-            dict: A joke object or None if the request failed
+            dict: Un objeto de chiste o None si la petición falló
         """
         try:
             response = requests.get(f"{self.api_url}/random", headers=self.headers)
-            response.raise_for_status()  # Raise an exception for HTTP errors
+            response.raise_for_status()  # Lanzo una excepción para errores HTTP
             return response.json()
         except requests.RequestException as e:
-            print(f"Error fetching joke: {e}")
+            print(f"Error al obtener el chiste: {e}")
             return {"error": "En estos momentos hay un elefante pisoteando nuestros servidores, inténtalo más tarde y si persiste contacta con el administrador para espantarlos."}
 
     def get_random_joke_by_type(self, type_slug):
         """
-        Fetch a random joke of a specific type.
+        Obtengo un chiste aleatorio de un tipo específico.
 
         Args:
-            type_slug (str): The type of joke to fetch
+            type_slug (str): El tipo de chiste a obtener
 
         Returns:
-            dict: A joke object or None if the request failed
+            dict: Un objeto de chiste o None si la petición falló
         """
         try:
             response = requests.get(f"{self.api_url}/type/{type_slug}/content/random", headers=self.headers)
             response.raise_for_status()
             return response.json()
         except requests.RequestException as e:
-            print(f"Error fetching joke of type {type_slug}: {e}")
+            print(f"Error al obtener chiste de tipo {type_slug}: {e}")
             return {"error": "En estos momentos hay un elefante pisoteando nuestros servidores, inténtalo más tarde y si persiste contacta con el administrador para espantarlos."}
 
     def get_random_joke_by_group(self, group_slug):
         """
-        Fetch a random joke from a specific group.
+        Obtengo un chiste aleatorio de un grupo específico.
 
         Args:
-            group_slug (str): The group of jokes to fetch from
+            group_slug (str): El grupo de chistes del que obtener
 
         Returns:
-            dict: A joke object or None if the request failed
+            dict: Un objeto de chiste o None si la petición falló
         """
         try:
             response = requests.get(f"{self.api_url}/group/{group_slug}/content/random", headers=self.headers)
             response.raise_for_status()
             return response.json()
         except requests.RequestException as e:
-            print(f"Error fetching joke from group {group_slug}: {e}")
+            print(f"Error al obtener chiste del grupo {group_slug}: {e}")
             return {"error": "En estos momentos hay un elefante pisoteando nuestros servidores, inténtalo más tarde y si persiste contacta con el administrador para espantarlos."}
 
     def get_joke_by_id(self, joke_id):
         """
-        Fetch a specific joke by ID.
+        Obtengo un chiste específico por su ID.
 
         Args:
-            joke_id (str): The ID of the joke to fetch
+            joke_id (str): El ID del chiste a obtener
 
         Returns:
-            dict: A joke object or None if the request failed
+            dict: Un objeto de chiste o None si la petición falló
         """
         try:
             response = requests.get(f"{self.api_url}/{joke_id}", headers=self.headers)
             response.raise_for_status()
             return response.json()
         except requests.RequestException as e:
-            print(f"Error fetching joke {joke_id}: {e}")
+            print(f"Error al obtener el chiste {joke_id}: {e}")
             return None
 
     def search_jokes(self, query, limit=5):
         """
-        Search for jokes containing the query string.
+        Busco chistes que contengan la cadena de consulta.
 
         Args:
-            query (str): The search query
-            limit (int): Maximum number of jokes to return
+            query (str): La consulta de búsqueda
+            limit (int): Número máximo de chistes a devolver
 
         Returns:
-            list: A list of joke objects or empty list if the request failed
+            list: Una lista de objetos de chiste o lista vacía si la petición falló
         """
         try:
             params = {'q': query, 'limit': limit}
@@ -99,5 +99,5 @@ class JokesService:
             response.raise_for_status()
             return response.json()
         except requests.RequestException as e:
-            print(f"Error searching jokes: {e}")
+            print(f"Error al buscar chistes: {e}")
             return []

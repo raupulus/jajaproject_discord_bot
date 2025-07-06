@@ -18,4 +18,4 @@ RUN useradd -m botuser
 USER botuser
 
 # Run the bot when the container launches
-CMD ["python", "bot.py"]
+CMD ["python", "main.py"]
