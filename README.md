@@ -4,8 +4,7 @@ JajaBot es un bot de Discord que consume una API de chistes y los comparte en tu
 
 Link para añadirlo a tu servidor: [Bot para Discord](https://discord.com/oauth2/authorize?client_id=1391159444490158202&permissions=274877908992&integration_type=0&scope=bot)
 
-¡Puedes colaborar añadiendo más chistes en [https://jaja.raupulus.dev]
-(https://jaja.raupulus.dev) antes de que se te olviden!
+¡Puedes colaborar añadiendo más chistes en [https://jaja.raupulus.dev](https://jaja.raupulus.dev) antes de que se te olviden!
 
 ## Características
 
