@@ -21,7 +21,7 @@ GROUP_TRANSLATIONS = {
     "lepe": "chistes-lepe",
     "general": "chistes-general",
     "malo": "chistes-malos",
-    "infantil": "chistes-infantil",
+    "infantil": "chistes-infantiles",
 }
 
 # Diccionario para metadatos de comandos
