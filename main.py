@@ -20,7 +20,7 @@ GROUP_TRANSLATIONS = {
     "dev": "chistes-devs",
     "lepe": "chistes-lepe",
     "general": "chistes-general",
-    "malo": "chistes-general",
+    "malo": "chistes-malos",
     "infantil": "chistes-infantil",
 }
 
