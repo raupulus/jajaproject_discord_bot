@@ -108,6 +108,7 @@ Link para añadirlo a tu servidor: [Bot para Discord](https://discord.com/oauth2
 - `!chiste lepe` - Obtiene un chiste aleatorio del grupo de Lepe
 - `!chiste malo` - Obtiene un chiste aleatorio del grupo de Malos
 - `!chiste infantil` - Obtiene un chiste aleatorio del grupo de Infantiles
+- `!chiste add [contenido]` - Envía una sugerencia de contenido directamente a la API
 - `!colaborar` - Muestra información sobre cómo contribuir con tus propios chistes
 - `!help` - Muestra la lista de comandos disponibles
 - `!help [comando]` - Muestra ayuda detallada sobre un comando específico
@@ -135,3 +136,7 @@ Las contribuciones son bienvenidas. Por favor, siente libre de abrir un issue o 
 ## Licencia
 
 Este proyecto está licenciado bajo la Licencia GNU General Public License v3.0 - ver el archivo [LICENSE](LICENSE) para más detalles.
+
+## TODO
+
+- Añadir posibilidad de reportar contenido

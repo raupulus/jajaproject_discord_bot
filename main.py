@@ -127,15 +127,17 @@ async def on_command_error(ctx, error):
         await ctx.send("Ha ocurrido un error al procesar el comando.")
 
 @bot.command(name="chiste")
-async def chiste(ctx, arg=None):
+async def chiste(ctx, arg=None, *, content=None):
     """
-    Obtiene un chiste de la API de chistes.
+    Obtiene un chiste de la API de chistes o envía una sugerencia.
 
     Args:
         arg: Argumento opcional para especificar el tipo o grupo de chiste
              - 'random': Obtiene un chiste aleatorio por tipo
              - 'help': Muestra la ayuda para este comando
+             - 'add': Envía una sugerencia de contenido a la API
              - Cualquier otro valor: Intenta emparejarlo con un grupo en GROUP_TRANSLATIONS
+        content: Contenido adicional para el comando (usado con 'add')
     """
     if arg is None or arg.lower() == 'help':
         # Mostrar ayuda para el comando
@@ -170,6 +172,13 @@ async def chiste(ctx, arg=None):
             inline=False
         )
 
+        # Añadir campo para el comando add
+        embed.add_field(
+            name=f"{COMMAND_PREFIX}chiste add [contenido]",
+            value="Envía una sugerencia de contenido directamente a la Comunidad del Chiste",
+            inline=False
+        )
+
         await ctx.send(embed=embed)
         return
 
@@ -181,6 +190,23 @@ async def chiste(ctx, arg=None):
     elif arg.lower() == 'colaborar':
         # Llamo al comando colaborar
         await colaborar(ctx)
+        return
+    elif arg.lower() == 'add':
+        # Enviar sugerencia de contenido
+        if not content:
+            await ctx.send("Debes proporcionar contenido para la sugerencia. Es muy sencillo, solo tienes que hacer una cosa... escribir el contenido Ejemplo: `!chiste add Este es mi chiste...`")
+            return
+
+        # Obtener el nickname del usuario
+        nick = ctx.author.display_name
+
+        # Enviar la sugerencia
+        response = jokes_service.send_suggestion(content, nick)
+
+        if response and 'error' in response:
+            await ctx.send(response['error'])
+        else:
+            await ctx.send("¡Gracias por tu sugerencia! Ha sido enviada correctamente.")
         return
     elif arg.lower() in GROUP_TRANSLATIONS:
         # Obtengo un chiste del grupo especificado

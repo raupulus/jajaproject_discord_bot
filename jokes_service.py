@@ -101,3 +101,26 @@ class JokesService:
         except requests.RequestException as e:
             print(f"Error al buscar chistes: {e}")
             return []
+
+    def send_suggestion(self, content, nick):
+        """
+        Envía una sugerencia de contenido a la API.
+
+        Args:
+            content (str): El contenido de la sugerencia
+            nick (str): El nombre de usuario que envía la sugerencia
+
+        Returns:
+            dict: La respuesta de la API o un diccionario con un mensaje de error
+        """
+        try:
+            data = {
+                'content': content,
+                'nick': nick
+            }
+            response = requests.post(f"{self.api_url}/suggestion/send", json=data, headers=self.headers)
+            response.raise_for_status()
+            return response.json()
+        except requests.RequestException as e:
+            print(f"Error al enviar sugerencia: {e}")
+            return {"error": "No se pudo enviar la sugerencia. Por favor, inténtalo más tarde."}
