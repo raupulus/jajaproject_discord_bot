@@ -102,6 +102,28 @@ class JokesService:
             print(f"Error al buscar chistes: {e}")
             return []
 
+    def get_random_joke_by_user(self, username):
+        """
+        Obtengo un chiste aleatorio de un usuario específico.
+
+        Args:
+            username (str): El nombre de usuario del que obtener contenido (sin @)
+
+        Returns:
+            dict: Un objeto de chiste o None si la petición falló
+        """
+        try:
+            # Eliminar el @ si está presente
+            if username.startswith('@'):
+                username = username[1:]
+
+            response = requests.get(f"{self.api_url}/user/{username}/content/random", headers=self.headers)
+            response.raise_for_status()
+            return response.json()
+        except requests.RequestException as e:
+            print(f"Error al obtener chiste del usuario {username}: {e}")
+            return {"error": "En estos momentos hay un elefante pisoteando nuestros servidores, inténtalo más tarde y si persiste contacta con el administrador para espantarlos."}
+
     def send_suggestion(self, content, nick):
         """
         Envía una sugerencia de contenido a la API.

@@ -136,6 +136,7 @@ async def chiste(ctx, arg=None, *, content=None):
              - 'random': Obtiene un chiste aleatorio por tipo
              - 'help': Muestra la ayuda para este comando
              - 'add': Envía una sugerencia de contenido a la API
+             - '@username': Obtiene un chiste aleatorio subido por el usuario especificado
              - Cualquier otro valor: Intenta emparejarlo con un grupo en GROUP_TRANSLATIONS
         content: Contenido adicional para el comando (usado con 'add')
     """
@@ -179,6 +180,13 @@ async def chiste(ctx, arg=None, *, content=None):
             inline=False
         )
 
+        # Añadir campo para el comando @username
+        embed.add_field(
+            name=f"{COMMAND_PREFIX}chiste @username",
+            value="Obtiene un chiste aleatorio subido por el usuario especificado",
+            inline=False
+        )
+
         await ctx.send(embed=embed)
         return
 
@@ -209,6 +217,9 @@ async def chiste(ctx, arg=None, *, content=None):
         else:
             await ctx.send("¡Gracias por tu sugerencia! Ha sido enviada correctamente.")
         return
+    elif arg.startswith('@'):
+        # Obtengo un chiste aleatorio del usuario especificado
+        joke_data = jokes_service.get_random_joke_by_user(arg)
     elif arg.lower() in GROUP_TRANSLATIONS:
         # Obtengo un chiste del grupo especificado
         group_slug = GROUP_TRANSLATIONS[arg.lower()]
