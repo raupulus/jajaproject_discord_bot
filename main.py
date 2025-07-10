@@ -217,9 +217,14 @@ async def chiste(ctx, arg=None, *, content=None):
         else:
             await ctx.send("¡Gracias por tu sugerencia! Ha sido enviada correctamente.")
         return
-    elif arg.startswith('@'):
+    elif arg.startswith('@') or (arg and hasattr(ctx.message, 'mentions') and ctx.message.mentions):
         # Obtengo un chiste aleatorio del usuario especificado
-        joke_data = jokes_service.get_random_joke_by_user(arg)
+        # Si hay menciones en el mensaje, usar la primera mención
+        if hasattr(ctx.message, 'mentions') and ctx.message.mentions:
+            username = ctx.message.mentions[0].name
+            joke_data = jokes_service.get_random_joke_by_user('@' + username)
+        else:
+            joke_data = jokes_service.get_random_joke_by_user(arg)
     elif arg.lower() in GROUP_TRANSLATIONS:
         # Obtengo un chiste del grupo especificado
         group_slug = GROUP_TRANSLATIONS[arg.lower()]
