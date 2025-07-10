@@ -197,8 +197,9 @@ async def chiste(ctx, arg=None, *, content=None):
             await ctx.send("Debes proporcionar contenido para la sugerencia. Es muy sencillo, solo tienes que hacer una cosa... escribir el contenido Ejemplo: `!chiste add Este es mi chiste...`")
             return
 
-        # Obtener el nickname del usuario
-        nick = ctx.author.display_name
+        # Obtener el nombre global del usuario (consistente entre servidores)
+        # Usar global_name si está disponible, o name como respaldo
+        nick = ctx.author.global_name if ctx.author.global_name else ctx.author.name
 
         # Enviar la sugerencia
         response = jokes_service.send_suggestion(content, nick)

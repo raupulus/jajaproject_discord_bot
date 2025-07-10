@@ -137,6 +137,12 @@ Las contribuciones son bienvenidas. Por favor, siente libre de abrir un issue o 
 
 Este proyecto está licenciado bajo la Licencia GNU General Public License v3.0 - ver el archivo [LICENSE](LICENSE) para más detalles.
 
-## TODO
+## TOFIX
+
+- Hay que adaptar el modo de operar comando para usar la nueva forma oauth y 
+  tener comandos con slash /chiste
+
+## Propuestas para futuras funcionalidades
 
 - Añadir posibilidad de reportar contenido
+- Añadir comando de stats que devuelva las estadísticas de contenido
